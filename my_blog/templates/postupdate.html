@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Post Update
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+    <h2>Post Update</h2>
+    <form method="POST" class="card p-3 shadow" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input  type="text" value="{{post.title}}" class="form-control" name="title" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Content</label>
+          <textarea name="content" style="height:200px;" class="form-control" required>{{post.content}}</textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Image</label>
+          {% if p.image %}
+            <img src="{{post.image.url}}" style="width:200px;"><br/>
+          {% endif %}
+          <input type="file" class="form-control" name="image">
+        </div>
+        
+        <div class="mb-3">
+          <lable class="form-label">Category</lable>
+          <select name="category" class="form-control" required>
+            {% for c in category %}
+                <option {% if c.id == post.category_id %} selected {% endif %} value="{{c.id}}">{{c.name}}</option>
+            {% endfor %}
+          </select>
+          </div>
+
+        <button type="submit" name="submit" class="btn btn-primary">Update</button>
+      </form>
+</div>
+
+{% endblock %}
